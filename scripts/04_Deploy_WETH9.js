@@ -3,7 +3,6 @@ const {
   deployContract,
   writeTmpAddresses,
   VerifyContract,
-  readTmpAddresses,
 } = require('../shared/helpers');
 
 async function main() {
@@ -11,8 +10,8 @@ async function main() {
 
   const WETH9 = await deployContract('WETH9', [], deployer);
 
-  writeTmpAddresses({ WETH9: WETH9.address });
   VerifyContract(WETH9.address);
+  // writeTmpAddresses({ WETH9: WETH9.address });
 }
 
 main()

@@ -14,12 +14,12 @@ async function deployContract(name, args, deployer, options) {
   const argStr = args.map((i) => `"${i}"`).join(' ');
 
   console.info(`${name} : ${contract.address} `);
-  if (args) {
+  if (args.length) {
     console.info(`With these arguments\n ${argStr}`);
   }
 
   // wait for 1 block transactions to ensure deployment before verifying
-  await contract.deployTransaction.wait(5);
+  await contract.deployTransaction.wait(1);
   console.info('... Completed!');
   return contract;
 }
