@@ -5,7 +5,7 @@ See https://github.com/ethers-io/ethers.js/issues/195
 */
 const { utils } = require('ethers');
 
-exports.linkLibraries = ({ bytecode, linkReferences }, libraries) => {
+function linkLibraries({ bytecode, linkReferences }, libraries) {
   Object.keys(linkReferences).forEach((fileName) => {
     Object.keys(linkReferences[fileName]).forEach((contractName) => {
       if (!libraries.hasOwnProperty(contractName)) {
@@ -26,6 +26,8 @@ exports.linkLibraries = ({ bytecode, linkReferences }, libraries) => {
     });
   });
   return bytecode;
-};
+}
 
-// exports.default = { linkLibraries };
+module.exports = {
+  linkLibraries,
+};

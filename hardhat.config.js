@@ -21,7 +21,7 @@ module.exports = {
       accounts: PRIVATE_KEY1 !== undefined ? [PRIVATE_KEY1] : [],
     },
     mumbai: {
-      url: `https://polygon-mumbai.infura.io/v3/${INFURA_KEY}`,
+      url: `https://polygon-mumbai.g.alchemy.com/v2/4UlT9qgkX6rsNGHpxh9YkJZdhmnAvud2`,
       accounts: PRIVATE_KEY1 !== undefined ? [PRIVATE_KEY1] : [],
     },
   },
@@ -39,17 +39,6 @@ module.exports = {
         },
       },
     ],
-    overrides: {
-      'contracts/GoldBar.sol': {
-        version: '0.8.0',
-      },
-      'contracts/PugCoin.sol': {
-        version: '0.8.0',
-      },
-      'contracts/GoldiCoin.sol': {
-        version: '0.8.0',
-      },
-    },
   },
   etherscan: {
     apiKey: {

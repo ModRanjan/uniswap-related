@@ -20,12 +20,15 @@ const artifacts = {
 const uniswapV3Pool = require('@uniswap/v3-core/artifacts/contracts/UniswapV3Pool.sol/UniswapV3Pool.json');
 
 bn.config({ EXPONENTIAL_AT: 999999, DECIMAL_PLACES: 40 });
+// we use this to passin the ratio of two tokens and then this will output the square root price which
+// will be the starting price when our pool gets deployed
 function encodePriceSqrt(reserve1, reserve0) {
   return BigNumber.from(
     new bn(reserve1.toString())
       .div(reserve0.toString())
       .sqrt()
       .multipliedBy(new bn(2).pow(96))
+      .integerValue(3)
       .toString(),
   );
 }
@@ -51,8 +54,11 @@ async function main() {
   const [deployer, signer2] = await ethers.getSigners();
 
   // const PROVIDER = waffle.provider;
+  // const PROVIDER = new ethers.providers.JsonRpcProvider(
+  //   `https://goerli.infura.io/v3/4UlT9qgkX6rsNGHpxh9YkJZdhmnAvud2`,
+  // );
   const PROVIDER = new ethers.providers.JsonRpcProvider(
-    `https://goerli.infura.io/v3/${INFURA_KEY}`,
+    `https://goerli.infura.io/v3/7b9762bfedc84c44a9806602eb2cb7b0`,
   );
 
   const GoldBarCoin = await ethers.getContractFactory('GoldBar', deployer);
@@ -120,6 +126,8 @@ async function main() {
       NFTDescriptor: nftDescriptor.address,
     },
   );
+  // console.log('linkedByteCode : ', linkedByteCode);
+
   const NonfungibleTokenPositionDescriptor = new ContractFactory(
     artifacts.NonfungibleTokenPositionDescriptor.abi,
     linkedByteCode,
@@ -153,7 +161,7 @@ async function main() {
   });
 
   const sqrtPrice = encodePriceSqrt(1, 1);
-  console.log('sqrtPrice : ', sqrtPrice);
+  console.log('sqrtPrice : ', sqrtPrice); // BigNumber { value: "79228162514264337593543950336" }
 
   // this will create the pool of weth9 and goldBarCoin, but this will not return poolAddress so, we have to
   // call the getPool() of v3-core repo.

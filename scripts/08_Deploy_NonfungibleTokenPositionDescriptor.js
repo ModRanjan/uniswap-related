@@ -30,6 +30,7 @@ async function main() {
       NFTDescriptor: NFTDescriptor_ADDRESS,
     },
   );
+  console.log('linkedByteCode : ', linkedByteCode);
 
   const NonfungibleTokenPositionDescriptor = new ContractFactory(
     artifacts.NonfungibleTokenPositionDescriptor.abi,
